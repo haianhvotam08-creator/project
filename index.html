@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Giải Cứu Cơn Giận v4.0 Ultimate</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .wheel-pointer {
+            width: 0; 
+            height: 0; 
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 22px solid #38bdf8;
+        }
+        .chat-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .chat-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .chat-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+<body class="pb-16 relative">
+
+    <!-- Header -->
+    <header class="text-center pt-8 pb-4 px-4">
+        <div class="inline-block bg-slate-800/80 border border-slate-700 px-4 py-1.5 rounded-full text-cyan-400 font-semibold text-xs tracking-wider uppercase mb-3 shadow-sm">
+            <i class="fa-solid fa-shield-halved mr-1.5"></i> Protocol: Emergency Apology v4.0 Ultimate
+        </div>
+        <h1 class="heading-font text-3xl md:text-5xl font-bold text-white mb-2 tracking-tight">
+            Hệ Thống Xử Lý Khẩn Cấp Cơn Giận 🤖
+        </h1>
+        <p class="text-slate-400 max-w-md mx-auto text-sm md:text-base">
+            Giao thức khôi phục hòa bình tự động. Vui lòng chọn module khắc phục sự cố bên dưới.
+        </p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-5xl mx-auto px-4 mb-6">
+        <div class="glass-card p-2 rounded-2xl flex flex-wrap gap-1.5 justify-center shadow-md">
+            <button onclick="switchTab('tab-button')" id="btn-tab-button" class="tab-btn flex-1 min-w-[110px] py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 bg-cyan-500 text-slate-950 shadow-md">
+                <i class="fa-solid fa-terminal"></i>
+                <span>Log Lời Chúc</span>
+            </button>
+            <button onclick="switchTab('tab-radar')" id="btn-tab-radar" class="tab-btn flex-1 min-w-[110px] py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 text-slate-400 hover:bg-slate-800">
+                <i class="fa-solid fa-radar"></i>
+                <span>Radar Cơn Giận</span>
+            </button>
+            <button onclick="switchTab('tab-wheel')" id="btn-tab-wheel" class="tab-btn flex-1 min-w-[110px] py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 text-slate-400 hover:bg-slate-800">
+                <i class="fa-solid fa-rotate"></i>
+                <span>Vòng Quay</span>
+            </button>
+            <button onclick="switchTab('tab-ration')" id="btn-tab-ration" class="tab-btn flex-1 min-w-[110px] py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 text-slate-400 hover:bg-slate-800">
+                <i class="fa-solid fa-burger"></i>
+                <span>Viện Trợ</span>
+            </button>
+            <button onclick="switchTab('tab-pledge')" id="btn-tab-pledge" class="tab-btn flex-1 min-w-[110px] py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 text-slate-400 hover:bg-slate-800">
+                <i class="fa-solid fa-file-shield"></i>
+                <span>Cam Kết</span>
+            </button>
+            <button onclick="switchTab('tab-unavoidable')" id="btn-tab-unavoidable" class="tab-btn flex-1 min-w-[110px] py-2.5 px-2 rounded-xl font-bold text-xs md:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 text-slate-400 hover:bg-slate-800">
+                <i class="fa-solid fa-lock"></i>
+                <span>Force Close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4">
+
+        <!-- ================= TAB 1: LOG LỜI XIN LỖI ================= -->
+        <section id="tab-button" class="tab-content">
+            <div class="glass-card rounded-3xl p-6 md:p-10 text-center relative overflow-hidden border border-slate-700">
+                <div class="mb-6">
+                    <span class="text-5xl md:text-6xl block mb-4 animate-float">💻</span>
+                    <h2 class="heading-font text-xl md:text-2xl font-bold text-white mb-3">
+                        Tạo Lý Do & Lời Nhận Sai Ngẫu Nhiên
+                    </h2>
+                    <div class="min-h-[90px] flex items-center justify-center">
+                        <p class="text-sm md:text-base text-cyan-300 font-mono bg-slate-900/80 p-4 rounded-xl border border-slate-800 w-full max-w-xl transition-all duration-300 shadow-inner" id="cheer-text">
+                            "System Error: Người dùng nữ đang dỗi cấp độ 1. Đề nghị triển khai phương án nịnh nọt ngay lập tức."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="generateApology()" class="px-6 py-3 font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-teal-400 rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition text-xs md:text-sm cursor-pointer">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> Random Lý Do Mới
+                    </button>
+                    <button onclick="copyApologyText()" class="px-6 py-3 font-bold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl shadow-lg active:scale-95 transition text-xs md:text-sm cursor-pointer">
+                        <i class="fa-solid fa-copy mr-1.5"></i> Copy Tin Nhắn SOS
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB MỚI: RADAR CƠN GIẬN ================= -->
+        <section id="tab-radar" class="tab-content hidden">
+            <div class="glass-card rounded-3xl p-6 md:p-8 text-center border border-slate-700">
+                <h2 class="heading-font text-xl md:text-2xl font-bold text-white mb-2">
+                    📡 Radar Chẩn Đoán Cấp Độ Dỗi
+                </h2>
+                <p class="text-slate-400 text-sm mb-6">Chọn biểu hiện của bạn để hệ thống đưa ra thời gian sinh tồn còn lại của người code.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+                    <button onclick="analyzeAnger(1)" class="p-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-700 rounded-2xl transition text-left group">
+                        <div class="text-2xl mb-1">😒 Cấp 1</div>
+                        <div class="font-bold text-cyan-400 text-xs">Trả lời ngắn gọn "Ừ", "Uh"</div>
+                        <p class="text-[11px] text-slate-400 mt-1">Cảnh báo nhẹ. Cần lập tức bật chế độ ngoan ngoãn.</p>
+                    </button>
+                    <button onclick="analyzeAnger(2)" class="p-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-700 rounded-2xl transition text-left group">
+                        <div class="text-2xl mb-1">🤫 Cấp 2</div>
+                        <div class="font-bold text-amber-400 text-xs">Chế độ Im Lặng (Seen không rep)</div>
+                        <p class="text-[11px] text-slate-400 mt-1">Mức nguy hiểm trung bình. Yêu cầu order đồ ăn ngay.</p>
+                    </button>
+                    <button onclick="analyzeAnger(3)" class="p-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-700 rounded-2xl transition text-left group">
+                        <div class="text-2xl mb-1">🌋 Cấp 3</div>
+                        <div class="font-bold text-rose-500 text-xs">"Hỏi làm gì? Đi mà hỏi ai đó"</div>
+                        <p class="text-[11px] text-slate-400 mt-1">Mức báo động đỏ DEFCON 1. Cần có mặt trực tiếp khẩn cấp!</p>
+                    </button>
+                </div>
+
+                <div id="radar-result" class="hidden bg-slate-900/90 border border-cyan-500/30 p-4 rounded-2xl text-left">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-ping"></span>
+                        <h4 class="font-bold text-white text-sm" id="radar-title">Kết quả phân tích</h4>
+                    </div>
+                    <p class="text-xs text-slate-300 font-mono leading-relaxed" id="radar-desc"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: VÒNG QUAY BỒI THƯỜNG ================= -->
+        <section id="tab-wheel" class="tab-content hidden">
+            <div class="glass-card rounded-3xl p-6 md:p-8 text-center border border-slate-700">
+                <h2 class="heading-font text-xl md:text-2xl font-bold text-white mb-2">
+                    🎡 Vòng Quay Nghĩa Vụ Bồi Thường
+                </h2>
+                <p class="text-slate-400 text-sm mb-6">Trúng ô nào, người code phải chấp hành ô đó không bàn cãi.</p>
+
+                <div class="relative max-w-[320px] md:max-w-[380px] mx-auto mb-6">
+                    <div class="wheel-pointer absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-20"></div>
+                    <canvas id="wheelCanvas" width="380" height="380" class="w-full h-auto drop-shadow-2xl rounded-full"></canvas>
+                </div>
+
+                <button onclick="spinWheel()" class="px-8 py-3.5 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 text-white font-bold rounded-xl shadow-lg transition active:scale-95 text-sm md:text-base cursor-pointer">
+                    <i class="fa-solid fa-play mr-2"></i> Bắt Đầu Quay
+                </button>
+
+                <!-- Modal -->
+                <div id="wheel-result-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
+                        <div class="text-4xl mb-3">🎯</div>
+                        <h3 class="heading-font text-lg font-bold text-white mb-2">Kết Quả Thi Hành:</h3>
+                        <p class="text-base font-mono text-cyan-300 mb-6 bg-slate-800 p-3 rounded-xl border border-slate-700" id="wheel-result-text"></p>
+                        <button onclick="closeWheelModal()" class="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-bold rounded-xl transition">
+                            Xác Nhận Thi Hành
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB MỚI: VIỆN TRỢ THỰC PHẨM ================= -->
+        <section id="tab-ration" class="tab-content hidden">
+            <div class="glass-card rounded-3xl p-6 md:p-8 text-center border border-slate-700">
+                <h2 class="heading-font text-xl md:text-2xl font-bold text-white mb-2">
+                    🪂 Dispatch Viện Trợ Cứu NguyKhẩn Cấp
+                </h2>
+                <p class="text-slate-400 text-sm mb-6">Tick chọn các phần quà bạn muốn bắt người code mang đến ngay lập tức.</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div onclick="toggleRation(this)" class="ration-item p-4 bg-slate-900/80 border border-slate-700 rounded-2xl cursor-pointer hover:border-cyan-400 transition text-center">
+                        <div class="text-4xl mb-2">🧋</div>
+                        <div class="font-bold text-white text-xs">Trà Sữa 100% Đường</div>
+                        <div class="text-[10px] text-cyan-400 mt-1">+80% Mức độ hết giận</div>
+                    </div>
+                    <div onclick="toggleRation(this)" class="ration-item p-4 bg-slate-900/80 border border-slate-700 rounded-2xl cursor-pointer hover:border-cyan-400 transition text-center">
+                        <div class="text-4xl mb-2">🍗</div>
+                        <div class="font-bold text-white text-xs">Gà Rán Giòn Rụm</div>
+                        <div class="text-[10px] text-cyan-400 mt-1">+90% Năng lượng vui vẻ</div>
+                    </div>
+                    <div onclick="toggleRation(this)" class="ration-item p-4 bg-slate-900/80 border border-slate-700 rounded-2xl cursor-pointer hover:border-cyan-400 transition text-center">
+                        <div class="text-4xl mb-2">🍰</div>
+                        <div class="font-bold text-white text-xs">Bánh Ngọt Tiramisu</div>
+                        <div class="text-[10px] text-cyan-400 mt-1">+100% Ngọt ngào</div>
+                    </div>
+                    <div onclick="toggleRation(this)" class="ration-item p-4 bg-slate-900/80 border border-slate-700 rounded-2xl cursor-pointer hover:border-cyan-400 transition text-center">
+                        <div class="text-4xl mb-2">🍟</div>
+                        <div class="font-bold text-white text-xs">Khoai Tây Lắc Phô Mai</div>
+                        <div class="text-[10px] text-cyan-400 mt-1">+75% Đòn xả stress</div>
+                    </div>
+                </div>
+
+                <button onclick="dispatchRations()" class="px-8 py-3.5 bg-gradient-to-r from-emerald-400 to-teal-500 hover:brightness-110 text-slate-950 font-bold rounded-xl shadow-lg transition active:scale-95 text-xs md:text-sm cursor-pointer">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Gửi Lệnh Dispatch Viện Trợ
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: HỢP ĐỒNG CAM KẾT ================= -->
+        <section id="tab-pledge" class="tab-content hidden">
+            <div class="glass-card rounded-3xl p-6 md:p-8 border border-slate-700">
+                <div class="text-center mb-6">
+                    <h2 class="heading-font text-xl md:text-2xl font-bold text-white mb-2">
+                        📜 SLA Cam Kết Không Tái Phạm
+                    </h2>
+                    <p class="text-slate-400 text-sm">Tick chọn tối thiểu 3 điều khoản để ký kết văn bản pháp lý tình yêu.</p>
+                </div>
+
+                <div class="mb-6 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-slate-300 text-xs uppercase tracking-wider">Tiến độ phê duyệt:</span>
+                        <span class="font-mono font-bold text-cyan-400 text-base" id="pledge-percentage">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden border border-slate-700">
+                        <div id="pledge-bar" class="bg-gradient-to-r from-cyan-400 to-teal-400 h-full rounded-full transition-all duration-300 w-0"></div>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2 text-right font-mono" id="pledge-status">Cần chọn ít nhất 3/5 điều kiện</p>
+                </div>
+
+                <div class="space-y-3 mb-6" id="pledge-list"></div>
+
+                <div class="text-center">
+                    <button onclick="submitPledge()" id="pledge-submit-btn" disabled class="px-8 py-3 bg-slate-800 text-slate-500 font-bold rounded-xl transition cursor-not-allowed">
+                        <i class="fa-solid fa-signature mr-2"></i> Ký Điện Tử (Sign & Submit)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: FORCE CLOSE ================= -->
+        <section id="tab-unavoidable" class="tab-content hidden">
+            <div class="glass-card rounded-3xl p-6 md:p-12 text-center min-h-[400px] flex flex-col justify-center items-center relative overflow-hidden border border-slate-700" id="unavoidable-container">
+                <div id="unavoidable-question-box">
+                    <div class="text-5xl mb-4">⚠️</div>
+                    <h2 class="heading-font text-xl md:text-3xl font-bold text-white mb-2">
+                        Yêu Cầu Đóng Tiến Trình "Dỗi"
+                    </h2>
+                    <p class="text-slate-400 mb-8 text-sm md:text-base">Hệ thống ghi nhận bạn đã dỗi đủ thời gian quy định. Vui lòng bấm tha lỗi để tiếp tục.</p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-6 min-h-[100px] relative w-full">
+                        <button id="yesBtn" onclick="acceptForgiveness()" class="px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:brightness-110 text-slate-950 font-bold rounded-xl shadow-lg transition-all text-base z-10 cursor-pointer">
+                            Chấp Nhận Hòa Giải ✅
+                        </button>
+                        
+                        <button id="noBtn" onmouseenter="runAwayButton()" onclick="runAwayButton()" class="px-8 py-3.5 bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold rounded-xl shadow transition-all text-base z-10 sm:relative cursor-pointer">
+                            Vẫn Muốn Dỗi ❌
+                        </button>
+                    </div>
+                </div>
+
+                <div id="victory-box" class="hidden text-center py-6">
+                    <div class="text-6xl mb-4 animate-bounce">🎉</div>
+                    <h2 class="heading-font text-2xl md:text-4xl font-bold text-cyan-400 mb-2">
+                        STATUS: RESOLVED (ĐÃ GIẢI QUYẾT)
+                    </h2>
+                    <p class="text-sm md:text-base text-slate-300 max-w-md mx-auto mb-6 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        Cảm ơn bạn đã hợp tác vận hành hệ thống. Đã gửi lệnh dispatch đồ ăn vặt và trà sữa đến vị trí của bạn! 🚀
+                    </p>
+                    <button onclick="resetUnavoidable()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition border border-slate-700">
+                        <i class="fa-solid fa-rotate-left mr-1.5"></i> Reset Trạng Thái
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= SIÊU TRỢ LÝ AI ================= -->
+    <div id="ai-assistant-container" class="fixed bottom-5 right-5 z-50">
+        <button id="ai-toggle-btn" onclick="toggleAIChat()" class="flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-600 text-white font-bold rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 border border-cyan-300/40 cursor-pointer">
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-300 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
+            </span>
+            <i class="fa-solid fa-brain text-lg"></i>
+            <span class="text-xs md:text-sm tracking-wide">Trợ Lý AI Siêu Trí Tuệ 🤖</span>
+        </button>
+
+        <div id="ai-chat-window" class="hidden absolute bottom-16 right-0 w-[92vw] max-w-[380px] h-[520px] glass-card rounded-3xl border border-slate-700 flex flex-col shadow-2xl overflow-hidden transition-all duration-300">
+            <div class="bg-slate-900/90 border-b border-slate-800 p-3.5 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400 font-bold text-sm">🧠</div>
+                    <div>
+                        <h4 class="heading-font font-bold text-xs md:text-sm text-white">Omni AI Assistant</h4>
+                        <p class="text-[10px] text-cyan-400 flex items-center gap-1 font-mono">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Hỏi gì cũng đáp - Đa năng 100%
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1">
+                    <button onclick="clearChatMemory()" title="Xóa lịch sử chat" class="text-slate-400 hover:text-white p-1 rounded-lg transition text-xs">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                    <button onclick="toggleAIChat()" class="text-slate-400 hover:text-white p-1 rounded-lg transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="ai-messages" class="flex-1 p-3.5 overflow-y-auto space-y-3.5 text-xs md:text-sm chat-scrollbar">
+                <div class="flex gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs shrink-0 border border-cyan-500/30">🧠</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-2xl rounded-tl-none text-slate-200 max-w-[85%] shadow-sm leading-relaxed">
+                        Chào bạn! Tôi là siêu trợ lý AI tích hợp. Bạn có thể hỏi tôi bất cứ điều gì: từ lập trình, mẹo nịnh người yêu cho đến thực đơn giải xả stress! 🚀
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-3 py-2 border-t border-slate-800/80 bg-slate-900/40 flex flex-wrap gap-1.5">
+                <button onclick="askPreset('Làm sao để dỗ người yêu hết dỗi nhanh nhất?')" class="text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 px-2.5 py-1 rounded-lg transition">
+                    💡 Bí kíp dỗ người yêu
+                </button>
+                <button onclick="askPreset('Mã cheat code bí mật của web là gì?')" class="text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 px-2.5 py-1 rounded-lg transition">
+                    🔑 Mã Secret Key
+                </button>
+            </div>
+
+            <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+                <input id="ai-input" type="text" placeholder="Nhập câu hỏi bất kỳ ở đây..." onkeypress="handleKeyPress(event)" class="flex-1 bg-slate-800 text-white placeholder-slate-500 text-xs px-3.5 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-cyan-400 transition">
+                <button onclick="sendUserMessage()" class="w-9 h-9 bg-gradient-to-r from-cyan-400 to-teal-400 hover:brightness-110 text-slate-950 font-bold rounded-xl flex items-center justify-center transition shrink-0 cursor-pointer shadow-md">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 text-xs text-slate-500 font-mono">
+        DEBUGGED WITH LOVE & LOGIC © 2026 | Mẹo: Gõ "yeuanh" để kích hoạt Easter Egg ❤️
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        let audioCtx = null;
+        function playSound(type) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(400, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now); osc.stop(now + 0.05);
+                }
+            } catch (e) {}
+        }
+
+        function switchTab(tabId) {
+            playSound('click');
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-slate-950', 'shadow-md');
+                btn.classList.add('text-slate-400');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-cyan-500', 'text-slate-950', 'shadow-md');
+                activeBtn.classList.remove('text-slate-400');
+            }
+
+            if (tabId === 'tab-wheel' && !wheelInitialized) drawWheel();
+        }
+
+        const logMessages = [
+            "Lỗi 404: Không tìm thấy lý do chính đáng để tiếp tục dỗi.",
+            "Cảnh báo: Hành vi dỗi quá 3 tiếng có thể gây tổn hại nghiêm trọng đến tài khoản trà sữa.",
+            "Thông báo hệ thống: Người lập trình đã nhận toàn bộ trách nhiệm và cam kết khắc phục.",
+            "Diagnostic: Nguyên nhân gốc rễ là do code lỗi chứ user hoàn toàn đúng 100%.",
+            "Giao thức bổ sung: Tự động phê duyệt mọi yêu cầu ăn uống trong ngày."
+        ];
+        function generateApology() {
+            playSound('click');
+            const msg = logMessages[Math.floor(Math.random() * logMessages.length)];
+            document.getElementById('cheer-text').innerText = `"${msg}"`;
+            confetti({ particleCount: 20, spread: 50, origin: { y: 0.7 } });
+        }
+
+        function copyApologyText() {
+            playSound('click');
+            const text = document.getElementById('cheer-text').innerText;
+            navigator.clipboard.writeText(`🚨 [SOS Emergency Message]\n${text}\n👉 Anh nhận sai 100%, tha lỗi cho anh nhé! ❤️`);
+            alert("Đã copy tin nhắn SOS! Giờ hãy mở Zalo/Messenger và dán cho người ấy nhé!");
+        }
+
+        // Radar Logic
+        function analyzeAnger(level) {
+            playSound('click');
+            const res = document.getElementById('radar-result');
+            const title = document.getElementById('radar-title');
+            const desc = document.getElementById('radar-desc');
+            res.classList.remove('hidden');
+
+            if(level === 1) {
+                title.innerText = "Mức Độ: Nhẹ (Cần Thể Hiện Thành Ý)";
+                desc.innerText = "⏱️ Thời gian tồn tại của Dev: ~12 tiếng.\n👉 Khuyên dùng: Gửi tin nhắn nịnh nọt + 1 cốc trà sữa 50% đường.";
+            } else if(level === 2) {
+                title.innerText = "Mức Độ: Trung Bình (Báo Động Cam)";
+                desc.innerText = "⏱️ Thời gian tồn tại của Dev: ~3 tiếng.\n👉 Khuyên dùng: Triển khai ngay Tab 'Vòng Quay Bồi Thường' & gọi điện nhận sai gấp.";
+            } else {
+                title.innerText = "Mức Độ: Nguy Cấp (DEFCON 1 - Thảm Họa!)";
+                desc.innerText = "⏱️ Thời gian tồn tại của Dev: 15 Phút.\n👉 Khuyên dùng: Bỏ ngay bàn phím, mua combo đồ ăn ngon và xuất hiện ngay lập tức trước mặt người yêu!";
+            }
+            confetti({ particleCount: 30, spread: 60, origin: { y: 0.6 } });
+        }
+
+        // Ration Items
+        function toggleRation(el) {
+            playSound('click');
+            el.classList.toggle('border-cyan-400');
+            el.classList.toggle('bg-slate-800');
+        }
+
+        function dispatchRations() {
+            playSound('click');
+            confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
+            alert("🪂 Lệnh Airdrop đã phát đi! Các phần quà viện trợ đang trên đường vận chuyển tới vị trí của bạn.");
+        }
+
+        // Wheel Config
+        const wheelOptions = ["Free Trà Sữa 🧋", "Được sai vặt 1 ngày 👑", "Miễn phí bữa tối 🍕", "Xem phim tự chọn 🎬", "Được quyền cấu tay 1 cái 🤏", "Xóa biên bản giận dỗi ✔️"];
+        const colors = ["#0ea5e9", "#0284c7", "#6366f1", "#8b5cf6", "#ec4899", "#f43f5e"];
+        const wheelCanvas = document.getElementById("wheelCanvas");
+        const ctx = wheelCanvas.getContext("2d");
+        let currentAngle = 0, isSpinning = false, wheelInitialized = false;
+
+        function drawWheel() {
+            const num = wheelOptions.length, arc = (2 * Math.PI) / num, radius = wheelCanvas.width / 2;
+            ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+            for (let i = 0; i < num; i++) {
+                const angle = currentAngle + i * arc;
+                ctx.beginPath(); ctx.fillStyle = colors[i];
+                ctx.moveTo(radius, radius); ctx.arc(radius, radius, radius - 10, angle, angle + arc);
+                ctx.lineTo(radius, radius); ctx.fill(); ctx.strokeStyle = "#1e293b"; ctx.lineWidth = 3; ctx.stroke();
+                
+                ctx.save(); ctx.translate(radius, radius); ctx.rotate(angle + arc / 2);
+                ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = "bold 11px 'Plus Jakarta Sans'";
+                ctx.fillText(wheelOptions[i], radius - 25, 4); ctx.restore();
+            }
+            ctx.beginPath(); ctx.arc(radius, radius, 25, 0, 2 * Math.PI);
+            ctx.fillStyle = "#0f172a"; ctx.fill(); ctx.strokeStyle = "#38bdf8"; ctx.lineWidth = 3; ctx.stroke();
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true; playSound('click');
+            const spinAngle = 1440 + Math.random() * 360, duration = 2500, start = performance.now();
+            function animate(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                currentAngle = (spinAngle * Math.PI / 180) * (1 - Math.pow(1 - progress, 3));
+                drawWheel();
+                if (progress < 1) requestAnimationFrame(animate);
+                else {
+                    isSpinning = false;
+                    document.getElementById('wheel-result-text').innerText = wheelOptions[Math.floor(Math.random() * wheelOptions.length)];
+                    document.getElementById('wheel-result-modal').classList.remove('hidden');
+                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        function closeWheelModal() { document.getElementById('wheel-result-modal').classList.add('hidden'); }
+
+        // Pledges
+        const pledges = [
+            "Không bao giờ bật chế độ 'Im lặng' khi đang giải quyết vấn đề.",
+            "Tự động nhận sai trong vòng 5 giây đầu tiên khi phát sinh tranh chấp.",
+            "Cung cấp đầy đủ ngân sách ăn vặt định kỳ hàng tuần.",
+            "Lắng nghe nghiêm túc và không đưa ra lập luận logic phản bác.",
+            "Ưu tiên quyền lợi của đối phương lên trên mọi tiến độ cá nhân."
+        ];
+        const pledgeListEl = document.getElementById('pledge-list');
+        pledges.forEach((text) => {
+            pledgeListEl.innerHTML += `
+                <label class="flex items-center gap-3 p-3 bg-slate-900/80 hover:bg-slate-900 rounded-xl border border-slate-800 cursor-pointer transition">
+                    <input type="checkbox" onchange="updatePledge()" class="pledge-cb w-4 h-4 accent-cyan-400 rounded cursor-pointer">
+                    <span class="text-xs md:text-sm font-medium text-slate-300">${text}</span>
+                </label>`;
+        });
+
+        function updatePledge() {
+            playSound('click');
+            const checked = Array.from(document.querySelectorAll('.pledge-cb')).filter(cb => cb.checked).length;
+            const pct = Math.round((checked / pledges.length) * 100);
+            document.getElementById('pledge-bar').style.width = pct + '%';
+            document.getElementById('pledge-percentage').innerText = pct + '%';
+            
+            const btn = document.getElementById('pledge-submit-btn');
+            if (checked >= 3) {
+                document.getElementById('pledge-status').innerText = "Đã đạt ngưỡng tối thiểu ký kết!";
+                btn.disabled = false; btn.className = "px-8 py-3 bg-gradient-to-r from-cyan-400 to-teal-400 text-slate-950 font-bold rounded-xl shadow transition cursor-pointer";
+            } else {
+                document.getElementById('pledge-status').innerText = `Cần chọn ít nhất 3 điều (Hiện tại: ${checked}/3)`;
+                btn.disabled = true; btn.className = "px-8 py-3 bg-slate-800 text-slate-500 font-bold rounded-xl transition cursor-not-allowed";
+            }
+        }
+        function submitPledge() {
+            confetti({ particleCount: 80, spread: 80, origin: { y: 0.6 } });
+            alert("Hợp đồng dịch vụ cam kết đã được ký kết thành công trên hệ thống blockchain nội bộ!");
+        }
+
+        // Unavoidable
+        let yesScale = 1;
+        function runAwayButton() {
+            playSound('click');
+            const btn = document.getElementById('noBtn'), box = document.getElementById('unavoidable-container').getBoundingClientRect();
+            btn.style.position = 'absolute';
+            btn.style.left = Math.max(10, Math.floor(Math.random() * (box.width - 120))) + 'px';
+            btn.style.top = Math.max(10, Math.floor(Math.random() * (box.height - 80))) + 'px';
+            yesScale += 0.12;
+            document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
+        }
+        function acceptForgiveness() {
+            document.getElementById('unavoidable-question-box').classList.add('hidden');
+            document.getElementById('victory-box').classList.remove('hidden');
+            confetti({ particleCount: 120, spread: 90, origin: { y: 0.5 } });
+        }
+        function resetUnavoidable() {
+            yesScale = 1;
+            document.getElementById('yesBtn').style.transform = 'scale(1)';
+            const btn = document.getElementById('noBtn');
+            btn.style.position = 'relative'; btn.style.left = 'auto'; btn.style.top = 'auto';
+            document.getElementById('unavoidable-question-box').classList.remove('hidden');
+            document.getElementById('victory-box').classList.add('hidden');
+        }
+
+        // Easter Egg (Gõ "yeuanh")
+        let secretBuffer = "";
+        window.addEventListener('keyup', (e) => {
+            secretBuffer += e.key.toLowerCase();
+            if (secretBuffer.length > 10) secretBuffer = secretBuffer.substring(secretBuffer.length - 10);
+            if (secretBuffer.includes("yeuanh")) {
+                confetti({ particleCount: 200, spread: 100, origin: { y: 0.4 } });
+                alert("💖 [SECRET UNLOCKED]: Kích hoạt chế độ Auto Tha Lỗi 100%! Cảm ơn em nhiều lắm!");
+                secretBuffer = "";
+            }
+        });
+
+        // AI Assistant Logic
+        function toggleAIChat() {
+            playSound('click');
+            const chatWin = document.getElementById('ai-chat-window');
+            chatWin.classList.toggle('hidden');
+            if(!chatWin.classList.contains('hidden')) {
+                document.getElementById('ai-input').focus();
+            }
+        }
+
+        function clearChatMemory() {
+            playSound('click');
+            const container = document.getElementById('ai-messages');
+            container.innerHTML = `
+                <div class="flex gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs shrink-0 border border-cyan-500/30">🧠</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-2xl rounded-tl-none text-slate-200 max-w-[85%] shadow-sm leading-relaxed">
+                        Đã xóa sạch ký ức cũ! Tôi đã sẵn sàng nhận câu hỏi mới từ bạn.🚀
+                    </div>
+                </div>
+            `;
+        }
+
+        function appendMessage(sender, htmlContent) {
+            const container = document.getElementById('ai-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "flex gap-2.5 " + (sender === 'user' ? "justify-end" : "");
+
+            if (sender === 'ai') {
+                msgDiv.innerHTML = `
+                    <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs shrink-0 border border-cyan-500/30">🧠</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-2xl rounded-tl-none text-slate-200 max-w-[85%] shadow-sm leading-relaxed text-xs md:text-sm">
+                        ${htmlContent}
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-medium p-3 rounded-2xl rounded-tr-none max-w-[85%] shadow-sm text-xs md:text-sm">
+                        ${escapeHtml(htmlContent)}
+                    </div>
+                `;
+            }
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        function askPreset(question) {
+            playSound('click');
+            document.getElementById('ai-input').value = question;
+            sendUserMessage();
+        }
+
+        async function sendUserMessage() {
+            const input = document.getElementById('ai-input');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            playSound('click');
+            appendMessage('user', text);
+            input.value = '';
+
+            const container = document.getElementById('ai-messages');
+            const typingId = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.id = typingId;
+            typingDiv.className = "flex gap-2.5";
+            typingDiv.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs shrink-0 border border-cyan-500/30">🧠</div>
+                <div class="bg-slate-800/90 border border-slate-700/80 p-3 rounded-2xl rounded-tl-none text-slate-400 max-w-[85%] shadow-sm text-xs italic flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce"></span>
+                    <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                    <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                    Đang tra cứu dữ liệu...
+                </div>
+            `;
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => {
+                const element = document.getElementById(typingId);
+                if(element) element.remove();
+
+                const answer = getOmniAnswer(text);
+                appendMessage('ai', answer);
+            }, 800);
+        }
+
+        function getOmniAnswer(query) {
+            const q = query.toLowerCase();
+            if (q.includes('dỗ') || q.includes('giận') || q.includes('dỗi') || q.includes('người yêu')) {
+                return "💖 <b>Bí kíp tuyệt đỉnh dỗ người yêu:</b><br>1. <b>Im lặng và lắng nghe:</b> Tuyệt đối không tranh luận đúng - sai.<br>2. <b>Vũ khí tối thượng:</b> Chuyển sang tab <i>'Radar Cơn Giận'</i> hoặc <i>'Viện Trợ'</i> trên web này!<br>3. <b>Hành động thực tế:</b> Bấm order ngay một cốc trà sữa full topping.";
+            }
+            if (q.includes('mã') || q.includes('cheat') || q.includes('secret')) {
+                return "🔑 <b>Mật mã bí mật:</b> Hãy thử gõ từ <b>'yeuanh'</b> trực tiếp trên phím ở bất kỳ đâu trên trang web này để mở khóa hiệu ứng bất ngờ nhé! 😉";
+            }
+            return `🤖 <b>Phân tích câu hỏi:</b> <i>"${escapeHtml(query)}"</i><br><br>` +
+                   `💡 <b>Trả lời đa năng:</b> Mọi thắc mắc đều có thể giải quyết bằng sự chân thành. Hãy nhớ 3 quy tắc vàng:<br>` +
+                   `1. Bạn gái luôn đúng 100%.<br>` +
+                   `2. Nếu cảm thấy tranh cãi bế tắc, hãy order ngay trà sữa.<br>` +
+                   `3. Sử dụng tính năng <i>'Force Close Dỗi'</i> trên web để hòa giải nhanh nhất! 🚀`;
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        }
+    </script>
+</body>
+</html>
